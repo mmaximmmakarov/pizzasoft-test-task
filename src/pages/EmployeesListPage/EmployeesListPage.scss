@@ -1,0 +1,13 @@
+@import '../../scss';
+
+
+.employees-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 32px 0;
+}
+
+.employees-title h1 {
+  margin: 0;
+}
