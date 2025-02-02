@@ -11,15 +11,14 @@ import roles from "../../helpers/roles";
 import './EmployeeForm.scss';
 
 
-const EmployeeForm: React.FC<{ employee?: Employee, onSubmit?: Function }> = ({
-                                          employee, onSubmit = () => {
-  }
-                                        }) => {
+const EmployeeForm: React.FC<{ employee?: Employee, onSubmit?: Function }> = (
+    { employee, onSubmit = () => {}}
+) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
   const isEdit = Boolean(employee);
-  console.log(isEdit)
+
   // Если форма используется для редактирования, загружаем данные сотрудника
   useEffect(() => {
     if (employee) {
@@ -31,8 +30,12 @@ const EmployeeForm: React.FC<{ employee?: Employee, onSubmit?: Function }> = ({
   }, [employee, form]);
 
   const handleSubmit = useCallback((values: any) => {
-    const data = {...values, birthday: dayjs(values.birthday).format('DD.MM.YYYY')};
-    console.log('submit', data, isEdit)
+    const data = {
+        ...values,
+        birthday: dayjs(values.birthday).format('DD.MM.YYYY'),
+        phone: values.phone.replace(/_/g, '')
+    };
+
     if (isEdit) {
       // Если это редактирование существующего сотрудника
       dispatch(updateEmployee({...data, id: employee?.id}));
